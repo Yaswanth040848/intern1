@@ -1,0 +1,46 @@
+# Import required libraries
+import requests
+
+try:
+    # API URL
+    url = "https://jsonplaceholder.typicode.com/users"
+
+    # Fetch data from API
+    response = requests.get(url)
+
+    # Check response status
+    response.raise_for_status()
+
+    # Convert response into JSON format
+    users = response.json()
+
+    print("All Users Data:\n")
+
+    # Display all users
+    for user in users:
+        print(f"ID: {user['id']}")
+        print(f"Name: {user['name']}")
+        print(f"Email: {user['email']}")
+        print("-" * 30)
+
+    # Filtering Logic
+    print("\nFiltered Users (Name starts with 'C'):\n")
+
+    for user in users:
+        if user['name'].startswith('C'):
+            print(user['name'])
+
+except requests.exceptions.HTTPError as err:
+    print("HTTP Error:", err)
+
+except requests.exceptions.ConnectionError:
+    print("Connection Error. Check internet connection.")
+
+except requests.exceptions.Timeout:
+    print("Request Timed Out.")
+
+except requests.exceptions.RequestException as e:
+    print("An error occurred:", e)
+
+finally:
+    print("\nAPI Program Completed.")
